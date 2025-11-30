@@ -99,11 +99,10 @@ if [[ -r "$SYS_PATH/cid" ]]; then
         SERIAL_DEC="Unknown"
     fi
 
-    # --- Product Name (PNM, 5 ASCII bytes = 10 hex chars) ---
+    # product name (PNM, 5 ASCII bytes = 10 hex chars)
     PNM_HEX=${CID:6:10}
     _PNM=$(echo "$PNM_HEX" | xxd -r -p 2>/dev/null)
-
-    # --- Correct eMMC Manufacturing Date (MDT) ---
+    
     # MDT = CID byte 14 (2nd to last byte)
     MDT_BYTE_HEX=${CID:28:2}
     MDT_BYTE=$((16#$MDT_BYTE_HEX))
@@ -223,7 +222,7 @@ HEALTH=$(assess_health "$WEAR_A" "$WEAR_B" "$PRE_EOL" "$BAD_BLOCKS")
 
 # print report
 # PNM removed because $MODEL is untruncated
-# Manufacturing Date removed because the dates are optional/unreliable
+# manufacturing Date removed because the dates are optional/unreliable
 cat <<EOF
 ==============================================
 eMMC "SMART" Health Report for $DEVICE
